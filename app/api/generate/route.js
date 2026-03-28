@@ -1,66 +1,41 @@
-import OpenAI from "openai";
-
 export async function POST(req) {
   try {
     const body = await req.json();
 
-    // 🧠 If no API key, return demo (FREE fallback)
-    // 🔥 FORCE FREE MODE (ignore API for now)
-return Response.json({
-  text: `Professional Resume
+    return Response.json({
+      text: `PROFESSIONAL RESUME
 
 Name: ${body.name}
 Role: ${body.role}
 
-Education:
+----------------------------------
+
+EDUCATION:
 ${body.education}
 
-Skills:
+SKILLS:
 ${body.skills}
 
-Experience:
+EXPERIENCE:
 ${body.experience}
 
-Summary:
-Motivated and skilled candidate ready to contribute and grow in a professional environment.
+----------------------------------
 
-Cover Letter:
-I am excited to apply for the role of ${body.role}. I believe my skills and passion make me a strong fit.`
-});
-      return Response.json({
-        text: `Demo Resume:
+SUMMARY:
+Motivated and passionate ${body.role} with strong skills in ${body.skills}. Ready to contribute and grow in a professional environment.
 
-Name: ${body.name}
-Role: ${body.role}
+----------------------------------
 
-Skills: ${body.skills}
+COVER LETTER:
 
-This is a sample resume (API not connected yet).`
-      });
-    }
+Dear Hiring Manager,
 
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
+I am excited to apply for the role of ${body.role}. With my background in ${body.education} and skills in ${body.skills}, I am confident in my ability to contribute effectively to your team.
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "user",
-          content: `Create a professional resume for:
+Thank you for considering my application.
 
-Name: ${body.name}
-Role: ${body.role}
-Education: ${body.education}
-Skills: ${body.skills}
-Experience: ${body.experience}`
-        }
-      ],
-    });
-
-    return Response.json({
-      text: completion.choices[0].message.content || "No response",
+Sincerely,  
+${body.name}`
     });
 
   } catch (error) {
