@@ -52,10 +52,36 @@ export default function Dashboard() {
     doc.save("resume.pdf");
   };
 
-  return (
-    <main>
-      <h1>Dashboard</h1>
+return (
+  <main>
+    <h1>🚀 JobBoost AI</h1>
 
+    <div className="card">
+      <h2>Create Your Resume</h2>
+
+      <input name="name" placeholder="👤 Your Name" onChange={handleChange} />
+      <input name="role" placeholder="💼 Job Role" onChange={handleChange} />
+      <input name="education" placeholder="🎓 Education" onChange={handleChange} />
+      <input name="skills" placeholder="🛠 Skills (comma separated)" onChange={handleChange} />
+      <input name="experience" placeholder="💼 Experience" onChange={handleChange} />
+
+      <button onClick={generate}>
+        Generate Resume ✨
+      </button>
+    </div>
+
+    {result && (
+      <div className="card">
+        <h2>📄 Your Resume</h2>
+        <pre>{result}</pre>
+
+        <button onClick={downloadPDF}>
+          Download PDF 📥
+        </button>
+      </div>
+    )}
+  </main>
+);
       <input name="name" placeholder="Name" onChange={handleChange} />
       <input name="role" placeholder="Job Role" onChange={handleChange} />
       <input name="education" placeholder="Education" onChange={handleChange} />
