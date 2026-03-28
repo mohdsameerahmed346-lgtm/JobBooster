@@ -5,7 +5,28 @@ export async function POST(req) {
     const body = await req.json();
 
     // 🧠 If no API key, return demo (FREE fallback)
-    if (!process.env.OPENAI_API_KEY) {
+    // 🔥 FORCE FREE MODE (ignore API for now)
+return Response.json({
+  text: `Professional Resume
+
+Name: ${body.name}
+Role: ${body.role}
+
+Education:
+${body.education}
+
+Skills:
+${body.skills}
+
+Experience:
+${body.experience}
+
+Summary:
+Motivated and skilled candidate ready to contribute and grow in a professional environment.
+
+Cover Letter:
+I am excited to apply for the role of ${body.role}. I believe my skills and passion make me a strong fit.`
+});
       return Response.json({
         text: `Demo Resume:
 
