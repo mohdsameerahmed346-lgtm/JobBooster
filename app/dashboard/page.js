@@ -24,12 +24,47 @@ export default function Dashboard() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
-  const generate = async () => {
+const generate = async () => {
+  try {
     const res = await fetch("/api/generate", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(form),
     });
+
+    const data = await res.json();
+
+    console.log(data); // debug
+
+    setResult(data.text || "No response from AI");
+
+  } catch (error) {
+    console.error(error);
+    setResult("Error: " + error.message);
+  }
+};const generate = async () => {
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+
+    console.log(data); // debug
+
+    setResult(data.text || "No response from AI");
+
+  } catch (error) {
+    console.error(error);
+    setResult("Error: " + error.message);
+  }
+};
 
     const data = await res.json();
     setResult(data.text);
