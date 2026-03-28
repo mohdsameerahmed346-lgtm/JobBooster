@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -19,55 +20,29 @@ export default function Dashboard() {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (!user) router.push("/login");
-  }, []);
+  }, [router]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-const generate = async () => {
-  try {
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(form),
-    });
 
-    const data = await res.json();
+  // ✅ FIXED FUNCTION
+  const generate = async () => {
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form),
+      });
 
-    console.log(data); // debug
+      const data = await res.json();
+      setResult(data.text || "No response");
 
-    setResult(data.text || "No response from AI");
-
-  } catch (error) {
-    console.error(error);
-    setResult("Error: " + error.message);
-  }
-};const generate = async () => {
-  try {
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-
-    console.log(data); // debug
-
-    setResult(data.text || "No response from AI");
-
-  } catch (error) {
-    console.error(error);
-    setResult("Error: " + error.message);
-  }
-};
-
-    const data = await res.json();
-    setResult(data.text);
+    } catch (error) {
+      setResult("Error: " + error.message);
+    }
   };
 
   const downloadPDF = () => {
