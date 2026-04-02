@@ -44,13 +44,19 @@ export default function Dashboard() {
       setResult("Error: " + error.message);
     }
   };
+const downloadPDF = () => {
+  const isPaid = localStorage.getItem("paid");
 
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-    const lines = doc.splitTextToSize(result, 180);
-    doc.text(lines, 10, 10);
-    doc.save("resume.pdf");
-  };
+  if (!isPaid) {
+    alert("Upgrade to download PDF 🚀");
+    return;
+  }
+
+  const doc = new jsPDF();
+  const lines = doc.splitTextToSize(result, 180);
+  doc.text(lines, 10, 10);
+  doc.save(`${form.name || "resume"}.pdf`);
+};
 
 return (
   <main>
